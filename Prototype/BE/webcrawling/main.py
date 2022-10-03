@@ -1,11 +1,11 @@
 import re
 from urllib.parse import quote
-
-from webdriver_manager.chrome import ChromeDriverManager
-import time
-import threading
 import requests
-from bs4 import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup
+import pandas as pd
+
+from Prototype.BE.webcrawling.package.thread import ThreadWithReturnValue
+
 
 # Chormedriver.exe 절대 경로
 chromePath = "C:\\Users\\USER\\Desktop\\chromedriver.exe"
@@ -137,6 +137,9 @@ def get_data_from_first_query(url):
             result_list.append(data)
     return result_list
 
+#
+
+
 # [데이터 셋에 필요한 것] <3000개>
 # [링크, 본문, 모든 사진 링크]
 
@@ -146,14 +149,19 @@ if __name__ == "__main__":
     url = get_more_contents_url(FIRST_INDEX)
 
     data_batch = get_data_from_first_query(url)
-
-    threads = []
-    for i in range(1, 10):
-        url = get_more_contents_url(i)
-        t = threading.Thread(target=get_data_from_url, args=(url, ))
-        t.start()
-        threads.append(t)
-        # data_from_second = get_data_from_url(get_more_contents_url(i))
-
-    for thread in threads:
-        thread.join()
+    i = 1
+    for j in range(1, 100):
+        threads = []
+        data = []
+        for j in range(i, i+ 10):
+            url = get_more_contents_url(i)
+            t = ThreadWithReturnValue(target=get_data_from_url, args=(url,))
+            t.start()
+            threads.append(t)
+        i += 10
+        for thread in threads:
+            data = data + thread.join()
+        df = pd.DataFrame(data, columns=['post_link', 'image_src', 'blog_text'])
+        file_name = "data" + str(int(i/10))
+        df.to_csv('C:\\Users\\USER\\Desktop\\data\\' + file_name + '.csv', encoding='utf-8')
+        print(j, ": done")
