@@ -10,10 +10,14 @@ changeColor.addEventListener("click", async () => {
   });
 
   function setUrlColor() {
+    var urlRegex = /(https?:\/\/[^ ]*)/
     document.querySelectorAll("li").forEach(item => {
-      if(item.innerHTML.substring(0,38) == " <div class=\"total_wrap api_ani_send\">")
-      {
-        item.style.cssText = "background-color: beige";   
-      }
+      //console.log(item.innerHTML);
+      //console.log("\n");
+      var url = item.innerHTML.match(urlRegex)
+      url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
+      if(url.length > 0)
+        console.log(url);
     })
+    
   }
