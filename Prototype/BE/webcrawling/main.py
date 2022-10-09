@@ -54,9 +54,14 @@ def text_scraping(url):
         text = text.replace("\n","") #공백 제거
         return image_link, text
 
-    elif soup.find("div", attrs={"id":"postViewArea"}):
-        text = soup.find("div", attrs={"id":"postViewArea"}).get_text()
-        text = text.replace("\n","")
+    soup = soup.find("div", attrs={"id":"postViewArea"})
+    if soup:
+        images = soup.findAll("img")
+        if images:
+            for image in images:
+                image_link.append(image['src'])  # 블러 제거
+        text = soup.get_text()
+        text = text.replace("\n"," ")
         return image_link, text
     else:
         return image_link, None
@@ -150,11 +155,11 @@ if __name__ == "__main__":
 
     data_batch = get_data_from_first_query(url)
     i = 1
-    for j in range(1, 100):
+    for k in range(1, 100):
         threads = []
         data = []
-        for j in range(i, i+ 10):
-            url = get_more_contents_url(i)
+        for j in range(i, i + 10):
+            url = get_more_contents_url(j)
             t = ThreadWithReturnValue(target=get_data_from_url, args=(url,))
             t.start()
             threads.append(t)
@@ -164,4 +169,4 @@ if __name__ == "__main__":
         df = pd.DataFrame(data, columns=['post_link', 'image_src', 'blog_text'])
         file_name = "data" + str(int(i/10))
         df.to_csv('C:\\Users\\USER\\Desktop\\data\\' + file_name + '.csv', encoding='utf-8')
-        print(j, ": done")
+        print(k, ": done")
