@@ -44,15 +44,23 @@ def text_scraping(url):
     soup = BeautifulSoup(res.text, "lxml")
 
     images = soup.findAll("img", attrs={"class": "se-image-resource"})
+    stickers = soup.findAll("img", attrs={"class": "se-sticker-image"})
     image_link = []
+
     if images:
         for image in images:
             image_link.append(image['src'].replace("?type=w80_blur", "")) # 블러 제거
 
+    if stickers:
+        for stick in stickers:
+            image_link.append(stick['src'])
+
+
     if soup.find("div", attrs={"class":"se-main-container"}):
         text = soup.find("div", attrs={"class":"se-main-container"}).get_text()
-        text = text.replace("\n","") #공백 제거
+        text = text.replace("\n"," ") #공백 제거
         return image_link, text
+
 
     soup = soup.find("div", attrs={"id":"postViewArea"})
     if soup:
@@ -136,7 +144,6 @@ def get_data_from_first_query(url):
         if blog_m:
             images_src, blog_text = text_scraping(delete_iframe(post_link))
             if blog_text is not None:
-                # blog_text = blog_text.replace("?type=w80_blur", "")  # 공백 제거
                 data.append(images_src)
                 data.append(blog_text)
             result_list.append(data)
@@ -155,7 +162,7 @@ if __name__ == "__main__":
 
     data_batch = get_data_from_first_query(url)
     i = 1
-    for k in range(1, 100):
+    for k in range(1, 40):
         threads = []
         data = []
         for j in range(i, i + 10):
