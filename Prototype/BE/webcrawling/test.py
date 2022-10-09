@@ -1,59 +1,53 @@
-import requests
+import re, requests
+from main import text_scraping, delete_iframe
 from bs4 import BeautifulSoup
-from urllib.parse import quote
-import re
+# Test Class for blog link test
+class BlogTests():
 
-# naver 블로그가 아닌 경우, false return
-def check_blog(url):
-    res = requests.get(url)
-    res.raise_for_status() # 문제시 프로그램 종료
-    soup = BeautifulSoup(res.text, "lxml")
-    if soup.find('script', attrs={"text/javascript"}, string="blog"): #, attrs={"content":"blog"})
-        return True
-    else:
-        print("블로그가 아닙니다")
-        return False
+    post_link = False
+    blog_text = False
+    img_src = []
 
-# iframe 제거 후 blog.naver.com 붙이기
-def delete_iframe(url):
-    res = requests.get(url)
-    res.raise_for_status()  # 문제시 프로그램 종료
-    soup = BeautifulSoup(res.text, "lxml")
+    def set_blog_values(self, post_link):
+        self.post_link = post_link
+        blog_p = re.compile("blog.naver.com")
+        blog_m = blog_p.search(post_link)
+        if blog_m:
+            self.img_src, self.blog_text = text_scraping(delete_iframe(post_link))
 
-    src_url = "https://blog.naver.com/" + soup.iframe["src"]
+    def start_test(self, flag):
+        self.test_blog_has_img()
+        self.test_blog_has_text()
+        self.get_html(flag)
 
-    return src_url
+    # 블로그 이미지 여부 확인
+    def test_blog_has_img(self):
+        if not self.img_src:
+            print("이미지 없음")
 
-# 네이버블로그 본문 스크래핑
-def text_scraping(url):
-    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"}
-    res = requests.get(url, headers=headers)
-    res.raise_for_status() # 문제시 프로그램 종료
-    soup = BeautifulSoup(res.text, "lxml")
-    images = soup.select('div img')
+    # 블로그 본문이 비었는지 확인
+    def test_blog_has_text(self):
+        if not self.blog_text:
+            print("블로그 본문 없음")
 
-    for i in images:
-        print(i['src'])
+    # 블로그가 스티커 이미지가 있는지 확인
+    # def test_blog_has_sticker(self):
+    #
 
-    if soup.find("div", attrs={"class":"se-main-container"}):
-        text = soup.find("div", attrs={"class":"se-main-container"}).get_text()
-        text = text.replace("\n","") #공백 제거
-        return text
+    # 블로그의 스마트 에디터 버전을 판별
 
-    elif soup.find("div", attrs={"id":"postViewArea"}):
-        text = soup.find("div", attrs={"id":"postViewArea"}).get_text()
-        text = text.replace("\n","")
-        return text
-    else:
-        return "네이버 블로그는 맞지만, 확인불가"
+    def get_html(self, print_or_not):
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"}
+        res = requests.get(self.post_link, headers=headers)
+        res.raise_for_status()  # 문제시 프로그램 종료
+        soup = BeautifulSoup(res.text, "lxml")
+        if print_or_not:
+            print(soup)
 
-post_link = "https://blog.naver.com/dbwls0315/222852690296"
+if __name__ == "__main__":
 
-blog_p = re.compile("blog.naver.com")
-blog_m = blog_p.search(post_link)
-
-if blog_m:
-    blog_text = text_scraping(delete_iframe(post_link))
-    print("본문:", blog_text)
-
-print("-" * 50)
+    post_link = input()
+    test = BlogTests()
+    test.set_blog_values(post_link)
+    test.start_test(True)
