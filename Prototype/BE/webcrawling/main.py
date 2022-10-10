@@ -149,6 +149,7 @@ def get_data_from_first_query(url):
         if blog_m:
             images_src, blog_text = text_scraping(delete_iframe(post_link))
             if blog_text is not None:
+                # blog_text = blog_text.replace("?type=w80_blur", "")  # 공백 제거
                 data.append(images_src)
                 data.append(blog_text)
             result_list.append(data)
@@ -167,7 +168,7 @@ if __name__ == "__main__":
 
     data_batch = get_data_from_first_query(url)
     i = 1
-    for k in range(1, 40):
+    for k in range(1, 100):
         threads = []
         data = []
         for j in range(i, i + 10):

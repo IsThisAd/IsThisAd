@@ -50,4 +50,4 @@ if __name__ == "__main__":
     post_link = input()
     test = BlogTests()
     test.set_blog_values(post_link)
-    test.start_test(True)
+    test.start_test(False)
