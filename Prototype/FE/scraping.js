@@ -1,4 +1,4 @@
-
+//Getting the url of the blogs of naver, then scraps the body of the url and changes the block color of the web page
 function setUrlColor() {
     var urlRegex = /(https?:\/\/blog[^ "]*)/
     var flag = false;
@@ -14,14 +14,14 @@ function setUrlColor() {
         }
     })
 }
-
+//chages the block color of the web page
 function changeBlockColor(url, item, flag) {
     if (flag)
         item.style.cssText = "background-color: #ccffcc";
     else
         item.style.cssText = "background-color: #ffcccc"
 }
-
+// scraps the url's body 
 function scrapUrl(url, item) {
     if (url.includes("MyBlog")) {
         return
@@ -32,14 +32,17 @@ function scrapUrl(url, item) {
     const request = new XMLHttpRequest()
     request.open('GET', newURL, true)
     request.onload = function () {
-        //console.log(request.responseText.match(/\<div id="post-view.*\<\/div>/));
         var parser = new DOMParser()
         var doc = parser.parseFromString(request.responseText, "text/html")
-        console.log(doc)
+        strs = url.split('/')
+        var elem = doc.getElementById("post-view"+strs[4])
+        //var elem2 = doc.getElementsByClassName("se-main-container")
+        const newText = elem.innerHTML.replace(/<[^>]*>?/g, '');
+        console.log(newText)
     }
     request.send()
 }
-
+// make's a url that avails scraping
 function makeNewURL(url) {
     strs = url.split('/')
     var newURL = "https://blog.naver.com/PostView.nhn?blogId=" + strs[3] + "&logNo=" + strs[4]
