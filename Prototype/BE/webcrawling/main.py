@@ -63,7 +63,8 @@ def text_scraping(url):
 
     if soup.find("div", attrs={"class":"se-main-container"}):
         text = soup.find("div", attrs={"class":"se-main-container"}).get_text()
-        text = text.replace("\n"," ") #공백 제거
+        text = text.replace("\n", " ") #공백 제거
+        text = text.replace("\r", " ")
         return image_link, text
 
 
@@ -74,7 +75,8 @@ def text_scraping(url):
             for image in images:
                 image_link.append(image['src'])  # 블러 제거
         text = soup.get_text()
-        text = text.replace("\n"," ")
+        text = text.replace("\n", " ")
+        text = text.replace("\r", " ")
         return image_link, text
     else:
         return image_link, None
@@ -149,7 +151,6 @@ def get_data_from_first_query(url):
         if blog_m:
             images_src, blog_text = text_scraping(delete_iframe(post_link))
             if blog_text is not None:
-                # blog_text = blog_text.replace("?type=w80_blur", "")  # 공백 제거
                 data.append(images_src)
                 data.append(blog_text)
             result_list.append(data)
@@ -168,7 +169,7 @@ if __name__ == "__main__":
 
     data_batch = get_data_from_first_query(url)
     i = 1
-    for k in range(1, 100):
+    for k in range(1, 20):
         threads = []
         data = []
         for j in range(i, i + 10):
