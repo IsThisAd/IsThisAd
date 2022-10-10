@@ -43,11 +43,7 @@ def text_scraping(url):
     res.raise_for_status() # 문제시 프로그램 종료
     soup = BeautifulSoup(res.text, "lxml")
 
-    # 마무리 되면 or 연산으로 변경하면 더 빠를듯
-    images = soup.findAll("img", attrs={"class": "se-image-resource"})
-    stickers = soup.findAll("img", attrs={"class": "se-sticker-image"})
-    inline_images = soup.findAll("img", attrs={"class": "se-inline-image-resource"})
-
+    images = soup.findAll("img", attrs={"class": ["se-image-resource", "se-sticker-image", "se-inline-image-resource"]})
     image_link = []
 
     if images:
@@ -56,15 +52,6 @@ def text_scraping(url):
                 image_link.append(image['data-lazy-src'])
             else:
                 image_link.append(image['src'].replace("?type=w80_blur", ""))
-
-    if stickers:
-        for image in stickers:
-            image_link.append(image['src'])
-
-    if inline_images:
-        for image in inline_images:
-            image_link.append(image['src'])
-
 
     if soup.find("div", attrs={"class":"se-main-container"}):
         text = soup.find("div", attrs={"class":"se-main-container"}).get_text()
@@ -161,7 +148,6 @@ def get_data_from_first_query(url):
             result_list.append(data)
     return result_list
 
-#
 
 
 # [데이터 셋에 필요한 것] <3000개>
