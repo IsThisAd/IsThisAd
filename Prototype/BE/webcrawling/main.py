@@ -52,7 +52,10 @@ def text_scraping(url):
 
     if images:
         for image in images:
-            image_link.append(image['src'].replace("?type=w80_blur", "")) # 블러 제거
+            if 'data-lazy-src' in image.attrs:
+                image_link.append(image['data-lazy-src'])
+            else:
+                image_link.append(image['src'].replace("?type=w80_blur", ""))
 
     if stickers:
         for image in stickers:
@@ -75,7 +78,7 @@ def text_scraping(url):
         images = soup.findAll("img")
         if images:
             for image in images:
-                image_link.append(image['src'])  # 블러 제거
+                image_link.append(image['src'])
         text = soup.get_text()
         text = text.replace("\n", " ")
         text = text.replace("\r", " ")
@@ -158,6 +161,7 @@ def get_data_from_first_query(url):
             result_list.append(data)
     return result_list
 
+#
 
 
 # [데이터 셋에 필요한 것] <3000개>
