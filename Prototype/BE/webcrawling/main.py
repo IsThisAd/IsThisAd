@@ -63,7 +63,8 @@ def text_scraping(url):
 
     if soup.find("div", attrs={"class":"se-main-container"}):
         text = soup.find("div", attrs={"class":"se-main-container"}).get_text()
-        text = text.replace("\n"," ") #공백 제거
+        text = text.replace("\n", " ") #공백 제거
+        text = text.replace("\r", " ")
         return image_link, text
 
 
@@ -74,7 +75,8 @@ def text_scraping(url):
             for image in images:
                 image_link.append(image['src'])  # 블러 제거
         text = soup.get_text()
-        text = text.replace("\n"," ")
+        text = text.replace("\n", " ")
+        text = text.replace("\r", " ")
         return image_link, text
     else:
         return image_link, None
@@ -154,7 +156,6 @@ def get_data_from_first_query(url):
             result_list.append(data)
     return result_list
 
-#
 
 
 # [데이터 셋에 필요한 것] <3000개>
@@ -167,7 +168,7 @@ if __name__ == "__main__":
 
     data_batch = get_data_from_first_query(url)
     i = 1
-    for k in range(1, 40):
+    for k in range(1, 20):
         threads = []
         data = []
         for j in range(i, i + 10):
