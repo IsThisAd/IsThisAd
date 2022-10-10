@@ -161,7 +161,6 @@ def get_data_from_first_query(url):
             result_list.append(data)
     return result_list
 
-#
 
 
 # [데이터 셋에 필요한 것] <3000개>
