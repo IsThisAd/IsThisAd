@@ -3,4 +3,5 @@
 # BE gitignore
 prototype/BE/webcrawling/.idea/
 
-prototype/ML/data
+prototype/ML/rawdata
+prototype/ML/traindata
