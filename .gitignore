@@ -1,5 +1,6 @@
 *.DS_Store
 
-
 # BE gitignore
-./BE/webcrawling/.idea/
+prototype/BE/webcrawling/.idea/
+
+prototype/ML/data
