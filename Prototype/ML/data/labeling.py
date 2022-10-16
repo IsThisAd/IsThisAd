@@ -7,22 +7,22 @@ def ocr_labeling(urls, n):
     '''
     urls : 이미지 URL 리스트
     n : 살펴볼 이미지 URL의 수
-    return : 키워드 포함 여부, 포함되어 있던 URL
+    return : 키워드가 포함된 이미지 순서(맨 뒤가 1), 포함되어 있던 URL
     '''
     pytesseract.pytesseract.tesseract_cmd = R'C:\Program Files\Tesseract-OCR\tesseract'
     ocr_keywords = ["제공", "업체", "협찬", "지급", "원고료"]
     
-    for url in urls[-n:]:
+    for idx, url in enumerate(urls[-n:]):
         try:
             res = request.urlopen(url).read()
             img = Image.open(BytesIO(res))
             text = pytesseract.image_to_string(img, lang='kor').replace('\n', '').replace(' ', '')
         except:
-            print("Can't read image URL: "+url)
+            print("Can't read image URL: " + url)
             continue
         
         if any(keyword in text for keyword in ocr_keywords):
-            return int(1), url.split('/')[2]
+            return int(n - idx), url.split('/')[2]
     
     return int(0), None
 

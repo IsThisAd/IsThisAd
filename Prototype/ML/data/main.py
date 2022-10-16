@@ -33,7 +33,7 @@ for file in files:
     
     # 이미지 URL OCR 후 키워드 검사
     df[['ocr_label', 'ocr_src']] = df.progress_apply(lambda x : ocr_labeling(
-                image_url_parse(x['image_src']), 1), axis=1, result_type='expand')
+                image_url_parse(x['image_src']), 5), axis=1, result_type='expand')
     
     # 데이터 타입 변환 후 라벨링
     df = df.astype({'ocr_label':'int', 'text_label':'int'})
