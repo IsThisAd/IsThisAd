@@ -33,14 +33,15 @@ for file in files:
     
     # 이미지 URL OCR 후 키워드 검사
     df[['ocr_label', 'ocr_src']] = df.progress_apply(lambda x : ocr_labeling(
-                image_url_parse(x['image_src']), 1), axis=1, result_type='expand')
+                image_url_parse(x['image_src']), 5), axis=1, result_type='expand')
     
     # 데이터 타입 변환 후 라벨링
     df = df.astype({'ocr_label':'int', 'text_label':'int'})
-    df['label'] = df['ocr_label'] | df['text_label']
+    df['label'] = (df['ocr_label'] > 0) | df['text_label']
+    df = df.astype({'label':'int'})
     
     # column 이름 정렬
-    df = df[['post_id', 'label', 'text_label', 'ocr_label', 'ocr_src', 'user_id', 
+    df = df[['label', 'text_label', 'ocr_label', 'ocr_src', 'post_id', 'user_id', 
              'post_link', 'blog_text', 'image_src']]
 
     result = pd.concat([result, df])
