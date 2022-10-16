@@ -12,7 +12,8 @@ def ocr_labeling(urls, n):
     pytesseract.pytesseract.tesseract_cmd = R'C:\Program Files\Tesseract-OCR\tesseract'
     ocr_keywords = ["제공", "업체", "협찬", "지급", "원고료"]
     
-    for idx, url in enumerate(urls[-n:]):
+    urls.reverse()
+    for idx, url in enumerate(urls[:n]):
         try:
             res = request.urlopen(url).read()
             img = Image.open(BytesIO(res))
@@ -22,7 +23,7 @@ def ocr_labeling(urls, n):
             continue
         
         if any(keyword in text for keyword in ocr_keywords):
-            return int(n - idx), url.split('/')[2]
+            return int(idx+1), url.split('/')[2]
     
     return int(0), None
 
