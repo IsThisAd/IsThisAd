@@ -41,7 +41,7 @@ for file in files:
     df = df.astype({'label':'int'})
     
     # column 이름 정렬
-    df = df[['post_id', 'label', 'text_label', 'ocr_label', 'ocr_src', 'user_id', 
+    df = df[['label', 'text_label', 'ocr_label', 'ocr_src', 'post_id', 'user_id', 
              'post_link', 'blog_text', 'image_src']]
 
     result = pd.concat([result, df])
