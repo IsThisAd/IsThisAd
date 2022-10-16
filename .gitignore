@@ -4,5 +4,6 @@ __pycache__
 # BE gitignore
 prototype/BE/webcrawling/.idea/
 
+prototype/ML/data/sampledata
 prototype/ML/data/rawdata
 prototype/ML/data/traindata
