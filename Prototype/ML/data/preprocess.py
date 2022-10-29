@@ -1,11 +1,15 @@
 import re
 
 def preprocess_sentence(sentence):
-    sentence = remove_hashtag(sentence)
-    sentence = remove_phonenumber(sentence)
-    #sentence = remove_address(sentence)
-    sentence = remove_special(sentence)
-    sentence = simplify_sentence(sentence)
+    try:
+        sentence = remove_hashtag(sentence)
+        sentence = remove_phonenumber(sentence)
+        #sentence = remove_address(sentence)
+        sentence = remove_special(sentence)
+        sentence = simplify_sentence(sentence)
+    except:
+        sentence = ""
+        
     return sentence
 
 def remove_phonenumber(sentence):
