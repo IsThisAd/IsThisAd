@@ -3,8 +3,17 @@
     "description": "Build an Extension!",
     "version": "1.0",
     "manifest_version": 3,
-    "host_permissions" : ["https://www.google.com/search*","https://search.naver.com/search*"],
-    "permissions": ["storage", "activeTab", "scripting"],
+    "host_permissions" : [
+        "https://www.google.com/search*",
+        "https://search.naver.com/search*",
+        "https://tessdata.projectnaptha.com/4.0.0/*.gz",
+        "https://github.com/naptha/tessdata/blob/gh-pages/*.gz?raw=true"
+    ],
+    "permissions": [
+        "storage",
+        "activeTab", 
+        "scripting"
+    ],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
@@ -19,6 +28,8 @@
         "32": "/images/get_started32.png",
         "48": "/images/get_started48.png",
         "128": "/images/get_started128.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
     }
-    
 }  

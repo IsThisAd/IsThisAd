@@ -1,7 +1,5 @@
-const doOCR = async () => {
-    const image = document.getElementById('image');
-    const result = document.getElementById('result');
-  
+async function doOCR(images) {
+  const image = document.getElementById('image');
     const { createWorker } = Tesseract;
     const worker = createWorker({
       workerPath: chrome.runtime.getURL('js/worker.min.js'),

@@ -18,6 +18,7 @@ for file in files:
     print("Start preprocessing " + file + "!")
     
     df = pd.read_csv(data_dir + "/" + file, encoding='utf-8')
+    df = df.dropna(axis=0)
     
     len_sum += len(df)
     
