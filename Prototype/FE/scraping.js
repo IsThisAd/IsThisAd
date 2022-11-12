@@ -1,5 +1,5 @@
-var flag = false;
 
+var flag = false;
 //Getting the url of the blogs of naver, then scraps the body of the url and changes the block color of the web page
 function setColor() {
     var urlRegex = /(https?:\/\/blog[^ "]*)/
@@ -23,7 +23,7 @@ function changeBlockColor(item,ret) {
 
 // A Temporary function, which will change to a function that applies NLP Model to the text
 function printConsole(url){
-    console.log(url)
+    //console.log(url)
     flag = !flag
     return flag
 }
@@ -37,11 +37,24 @@ function setUrlColor(url, item) {
     request.onload = function () {
         var parser = new DOMParser()
         var doc = parser.parseFromString(request.responseText, "text/html")
+        var img_elem = doc.querySelectorAll(".se-image-resource, .se-inline-image-resource, .se-sticker-image")
+        var url_arr = [];
+        for(var i =  0; i < img_elem.length ; i++){
+            if(img_elem[i].getAttribute("data-lazy-src"))
+                url_arr.push(img_elem[i].getAttribute("data-lazy-src"))
+            else
+                url_arr.push(img_elem[i].src)
+        }
+        doTest(url_arr)
+        console.log(newURL)
+        console.log(" ")
+        console.log(" ")
         var elem = doc.getElementById("post-view"+strs[4])
         var newText = elem.innerHTML.replace(/<[^>]*>?/g, '').replace(/\s/g, "")
         .replace("URL복사이웃추가본문기타기능지도로보기전체지도지도닫기공유하기신고하기","")
         .replace("URL복사이웃추가본문기타기능공유하기신고하기")
         .replace(/(19|20)\d{2}\.([1-9]|1[012])\.([1-9]|[12][0-9]|3[0-1])\.([0-9]|1[0-9]|2[0-3]):([0-5][0-9])*/,"")
+        
         
         changeBlockColor(item,printConsole(newText));
     }
