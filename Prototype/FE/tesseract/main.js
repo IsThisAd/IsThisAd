@@ -13,14 +13,16 @@ async function doOCR(image_urls) {
 
   ocr_text = []
 
+  console.log(image_urls)
+
   for(var url in image_urls) {
     const data = await worker.recognize(url);
-    orc_text.apppend(data)
+    ocr_text.apppend(data)
   }
 
   await worker.terminate();
 
-  console.log(orc_text)
+  console.log(ocr_text)
 
   return ocr_text
 }
