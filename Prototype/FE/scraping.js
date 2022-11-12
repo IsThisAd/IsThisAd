@@ -45,7 +45,8 @@ function setUrlColor(url, item) {
             else
                 url_arr.push(img_elem[i].src)
         }
-        doTest(url_arr)
+        console.log(url_arr)
+        doOCR(url_arr)
         console.log(newURL)
         console.log(" ")
         console.log(" ")
