@@ -1,26 +1,31 @@
-async function doOCR(image_urls) {
-  const image = document.getElementById("image")
+async function doOCR(images) {
+  const image = document.getElementById('image');
+    const { createWorker } = Tesseract;
+    const worker = createWorker({
+      workerPath: chrome.runtime.getURL('js/worker.min.js'),
+      langPath: chrome.runtime.getURL('.'),
+      corePath: chrome.runtime.getURL('js/tesseract-core.wasm.js'),
+    });
+    
+    await worker.load();
+    await worker.loadLanguage('eng');
+    await worker.initialize('eng');
+    const { data: { text } } = await worker.recognize(image);
+    console.log(text);
+    result.innerHTML = `<p>OCR Result:</p><p>${text}</p>`;
+    await worker.terminate();
+  }
+  const doTest = (text) =>{
+    console.log(text);
+  }
 
-
-  const worker = new Tesseract.createWorker({
-    "workerBlobURL": false,
-    "workerPath": chrome.runtime.getURL("tesseract/worker.min.js"),
-    "corePath": chrome.runtime.getURL("tesseract/tesseract-core.wasm.js"),
-    "langPath": "https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0_fast"
+  //const startBtn = document.getElementById('changeColor');
+  //startBtn.onclick = doOCR;
+  /*
+  changeColor.addEventListener("click", async () => {
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    
+    doOCR()
   });
-
-  await worker.load();
-  await worker.loadLanguage('kor');
-  await worker.initialize('kor');
-
-  ocr_text = []
-
-  const data = await worker.recognize(image);
-  console.log(data)
-  await worker.terminate();
-
-  console.log(ocr_text)
-
-  return ocr_text
-}
- 
+  */
+  
