@@ -67,4 +67,5 @@ function setUrlColor(url, item,func) {
 
 }
 
+setColor();
 glob_arr;
