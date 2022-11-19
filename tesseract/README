@@ -1,0 +1,6 @@
+This app uses the following open-source JavaScript libraries:
+
+1) worker.min.js: https://unpkg.com/tesseract.js@3.0.3/dist/worker.min.js
+2) tesseract.min.js: https://unpkg.com/tesseract.js@3.0.3/dist/tesseract.min.js
+3) tesseract-core.wasm.js: https://unpkg.com/tesseract.js-core@3.0.2/tesseract-core.wasm.js
+4) tesseract-core.wasm: https://unpkg.com/browse/tesseract.js-core@3.0.2/tesseract-core.wasm
