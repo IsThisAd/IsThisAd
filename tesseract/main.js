@@ -1,29 +1,47 @@
-async function doOCR(images) {
-  const image = document.getElementById('image');
-    const { createWorker } = Tesseract;
-    const worker = createWorker({
-      workerPath: chrome.runtime.getURL('js/worker.min.js'),
-      langPath: chrome.runtime.getURL('.'),
-      corePath: chrome.runtime.getURL('js/tesseract-core.wasm.js'),
+async function getWorker() {
+  try{
+    let worker = new Tesseract.createWorker({
+      "workerBlobURL": false,
+      "workerPath": chrome.runtime.getURL("tesseract/worker.min.js"),
+      "corePath": chrome.runtime.getURL("tesseract/tesseract-core.wasm.js"),
+      "langPath": chrome.runtime.getURL("tesseract/")
     });
-    
-    await worker.load();
-    await worker.loadLanguage('eng');
-    await worker.initialize('eng');
-    const { data: { text } } = await worker.recognize(image);
-    console.log(text);
-    result.innerHTML = `<p>OCR Result:</p><p>${text}</p>`;
-    await worker.terminate();
-  }
-  
 
-  //const startBtn = document.getElementById('changeColor');
-  //startBtn.onclick = doOCR;
-  /*
-  changeColor.addEventListener("click", async () => {
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    
-    doOCR()
-  });
-  */
+    await worker.load();
+    await worker.loadLanguage('kor');
+    await worker.initialize('kor');
+    await worker.setParameters({
+      tessjs_create_hocr:'0',
+      tessjs_create_tsv:'0',
+    });
+
+    return worker;
+  } catch(err){
+    console.error("err");
+    return null;
+  }
+}
+
+async function doOCR(image_urls) {
+  const workerN = 8;
+  const scheduler = new Tesseract.createScheduler(); 
+  const workers = await Promise.all(Array(workerN).fill(0).map(() => (getWorker())));
+  
+  for(var i = 0; i < workerN; i++) { scheduler.addWorker(workers[i]); }
+
+  cropped_urls = []
+  image_urls.forEach((element) => {
+    for (url of element.splice(-2)) {
+      cropped_urls.push(url)
+    }
+  })
+
+  const results = await Promise.all(cropped_urls.map((url) => (
+    scheduler.addJob('recognize', url)
+  )));
+  
+  await scheduler.terminate();
+
+  return results
+}
   
