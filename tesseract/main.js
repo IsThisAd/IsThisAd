@@ -15,9 +15,7 @@ async function doOCR(images) {
     result.innerHTML = `<p>OCR Result:</p><p>${text}</p>`;
     await worker.terminate();
   }
-  const doTest = (text) =>{
-    console.log(text);
-  }
+  
 
   //const startBtn = document.getElementById('changeColor');
   //startBtn.onclick = doOCR;
