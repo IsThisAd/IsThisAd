@@ -4,10 +4,7 @@
     "version": "1.0",
     "manifest_version": 3,
     "host_permissions" : [
-        "https://www.google.com/search*",
-        "https://search.naver.com/search*",
-        "https://tessdata.projectnaptha.com/4.0.0/*.gz",
-        "https://github.com/naptha/tessdata/blob/gh-pages/*.gz?raw=true"
+        "<all_urls>"
     ],
     "permissions": [
         "storage",
