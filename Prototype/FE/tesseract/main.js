@@ -1,4 +1,6 @@
 async function doOCR(image_urls) {
+  const image = document.getElementById("image")
+
 
   const worker = new Tesseract.createWorker({
     "workerBlobURL": false,
@@ -13,22 +15,12 @@ async function doOCR(image_urls) {
 
   ocr_text = []
 
-  console.log(image_urls)
-
-  for(var url in image_urls) {
-    const data = await worker.recognize(url);
-    ocr_text.apppend(data)
-
-  }
-
+  const data = await worker.recognize(image);
+  console.log(data)
   await worker.terminate();
 
   console.log(ocr_text)
 
   return ocr_text
 }
-
-changeColor.addEventListener("click", function() {
-  doOCR()
-});
-  
+ 
