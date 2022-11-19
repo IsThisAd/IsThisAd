@@ -1,5 +1,6 @@
 
 var flag = false;
+var glob_arr = [];
 //Getting the url of the blogs of naver, then scraps the body of the url and changes the block color of the web page
 function setColor() {
     var urlRegex = /(https?:\/\/blog[^ "]*)/
@@ -7,9 +8,14 @@ function setColor() {
         var url = item.innerHTML.match(urlRegex)
         url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
         if (url.length > 0 && !url.includes("MyBlog")) {
-            setUrlColor(url, item)
+            setUrlColor(url, item);
+
         }
     })
+    
+    console.log(glob_arr);
+    console.log(" ")
+    console.log(" ")
 }
 
 //chages the block color of the web page 
@@ -33,7 +39,8 @@ function setUrlColor(url, item) {
     var strs = url.split('/')
     var newURL = "https://blog.naver.com/PostView.nhn?blogId=" + strs[3] + "&logNo=" + strs[4]
     const request = new XMLHttpRequest()
-    request.open('GET', newURL, true)
+    
+    request.open('GET', newURL, false)
     request.onload = function () {
         var parser = new DOMParser()
         var doc = parser.parseFromString(request.responseText, "text/html")
@@ -45,10 +52,7 @@ function setUrlColor(url, item) {
             else
                 url_arr.push(img_elem[i].src)
         }
-        doTest(url_arr)
-        console.log(newURL)
-        console.log(" ")
-        console.log(" ")
+        glob_arr.push(url_arr);
         var elem = doc.getElementById("post-view"+strs[4])
         var newText = elem.innerHTML.replace(/<[^>]*>?/g, '').replace(/\s/g, "")
         .replace("URL복사이웃추가본문기타기능지도로보기전체지도지도닫기공유하기신고하기","")
@@ -59,6 +63,7 @@ function setUrlColor(url, item) {
         changeBlockColor(item,printConsole(newText));
     }
     request.send()
+
 }
 
-//setColor()
+setColor()
