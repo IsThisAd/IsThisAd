@@ -3,14 +3,15 @@ let changeColor = document.getElementById("changeColor");
 // When the button is clicked, inject scaping.js/setColor
 changeColor.addEventListener("click", async () => {
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    var result;
 
-    chrome.scripting.executeScript({
+    await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       files : ["scraping.js"],      
-    },
-    (injectionResults) => {
-      for (const frameResult of injectionResults)
-        console.log(frameResult.result);
-    }
-    );
+    }, (injectionResults) => {
+      for (const frameResult of injectionResults){
+        console.log(frameResult.result)
+        doOCR(frameResult.result)
+      }
+    });
   });
