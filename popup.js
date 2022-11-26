@@ -16,10 +16,20 @@ function setColorNew(result) {
     })
 }
 
+function findKeywords(texts) {
+  console.log(texts)
+  const results = texts.map((item) => (
+    item.data.text.includes("제공")
+  ));
+
+  console.log(results)
+
+  return results
+}
+
 // When the button is clicked, inject scaping.js/setColor
 changeColor.addEventListener("click", async () => {
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    var result;
 
     await chrome.scripting.executeScript({
       target: { tabId: tab.id },
@@ -27,12 +37,13 @@ changeColor.addEventListener("click", async () => {
     }, (injectionResults) => {
       for (const frameResult of injectionResults){
         console.log(frameResult.result)
-        result = doOCR(frameResult.result)
-        chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          func : setColorNew,
-          args : [result],
-        });
+        doOCR(frameResult.result)
+          .then((ocr_texts) => findKeywords(ocr_texts))
+          .then((labels) => chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func : setColorNew,
+            args : [labels],
+        }))
       }
     });
   });
