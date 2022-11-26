@@ -1,6 +1,5 @@
 let changeColor = document.getElementById("changeColor");
 
-var flag = false;
 function setColorNew(labels) {
     var index = 0
     var urlRegex = /(https?:\/\/blog[^ "]*)/
