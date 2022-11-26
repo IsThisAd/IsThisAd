@@ -77,8 +77,7 @@ function setUrlColor(url, item,func) {
         .replace("URL복사이웃추가본문기타기능공유하기신고하기")
         .replace(/(19|20)\d{2}\.([1-9]|1[012])\.([1-9]|[12][0-9]|3[0-1])\.([0-9]|1[0-9]|2[0-3]):([0-5][0-9])*/,"") 
         
-        
-        changeBlockColor(item,printConsole(newText));
+        //changeBlockColor(item,printConsole(newText));
     }
     request.send()
 
