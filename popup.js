@@ -1,17 +1,18 @@
 let changeColor = document.getElementById("changeColor");
 
 var flag = false;
-function setColorNew(result) {
+function setColorNew(labels) {
+    var index = 0
     var urlRegex = /(https?:\/\/blog[^ "]*)/
     document.querySelectorAll("li").forEach(item => {
         var url = item.innerHTML.match(urlRegex)
         url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
         if (url.length > 0 && !url.includes("MyBlog")) {
-            flag = !flag;
-            if (flag)
+            if (!labels[index])
                 item.style.cssText = "background-color: #ccffcc";
             else
                 item.style.cssText = "background-color: #ffcccc"
+            index++
         }
     })
 }
