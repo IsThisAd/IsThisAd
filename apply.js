@@ -20,6 +20,7 @@ function removeWhitespace(text) {
 }
 
 function findKeywords(text) {
+    if (text == config.deteceted) { return true }
     for (keyword of config.ocr_keywords) {
         if (text.includes(keyword)) { return true }
     }

@@ -36,14 +36,14 @@ async function doOCR(image_urls) {
   // 좀 더 직관적이고 아름답게 할 수 있는 방법이 없을까
   cropped_urls = []
   image_urls.forEach((element) => {
-    for (url of element.splice(-1)) {
-      cropped_urls.push(url)
-    }
+    if (typeof(element) == typeof('string')) { cropped_urls.push(config.detected)}
+    else { for (url of element.splice(-1)) { cropped_urls.push(url) }}
   })
 
-  const results = await Promise.all(cropped_urls.map((url) => (
-    scheduler.addJob('recognize', url)
-  )));
+  const results = await Promise.all(cropped_urls.map((url) => {
+    if (url == config.detected) { return { data: { text : url } } } 
+    return scheduler.addJob('recognize', url) 
+  }));
   
   await scheduler.terminate();
 
