@@ -6,9 +6,10 @@ changeColor.addEventListener("click", async () => {
 
     await chrome.scripting.executeScript({
       target: { tabId: tab.id },
-      files : ["scraping.js"],      
+      files : ["config.js", "scraping.js"],      
     }, (injectionResults) => {
       for (const frameResult of injectionResults){
+        console.log(frameResult.result)
         doOCR(frameResult.result)
           .then((results) => applyResults(results))
       }
