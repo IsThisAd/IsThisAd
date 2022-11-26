@@ -4,7 +4,8 @@ async function getWorker() {
       "workerBlobURL": false,
       "workerPath": chrome.runtime.getURL("tesseract/worker.min.js"),
       "corePath": chrome.runtime.getURL("tesseract/tesseract-core.wasm.js"),
-      "langPath": chrome.runtime.getURL("tesseract/")
+      //"langPath": chrome.runtime.getURL("tesseract/")
+      "langPath":"https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0_fast"
     });
 
     await worker.load();
