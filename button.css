@@ -1,13 +1,25 @@
 button {
-    height: 30px;
-    width: 30px;
-    outline: none;
-    margin: 10px;
-    border: none;
-    border-radius: 2px;
-  }
-  
-  button.current {
-    box-shadow: 0 0 0 2px white,
-                0 0 0 4px black;
-  }
+  height: 50px;
+  width: 50px;
+  outline: none;
+  margin: 10px;
+  border: none;
+  border-radius: 2px;
+}
+
+button.current {
+  box-shadow: 0 0 0 2px white,
+              0 0 0 4px black;
+}
+.buttonload {
+  background-color: #39f8b2;
+  /* Green background */
+  border: none;
+  /* Remove borders */
+  color: white;
+  /* White text */
+  padding: 12px 16px;
+  /* Some padding */
+  font-size: 16px
+    /* Set a font size */
+}
