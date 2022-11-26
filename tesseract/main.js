@@ -33,7 +33,7 @@ async function doOCR(image_urls) {
   cropped_urls = []
   console.log(image_urls)
   image_urls.forEach((element) => {
-    for (url of element.splice(-2)) {
+    for (url of element.splice(-1)) {
       cropped_urls.push(url)
     }
   })

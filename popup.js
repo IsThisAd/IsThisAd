@@ -16,15 +16,16 @@ function setColorNew(result) {
     })
 }
 
-function findKeywords(texts) {
-  console.log(texts)
-  const results = texts.map((item) => (
-    item.data.text.includes("제공")
+function findKeywords(results) {
+  console.log(results)
+  const labels = results.map((item) => (
+    console.log(item.data.text)
+    //item.data.text.includes("제공")
   ));
 
-  console.log(results)
+  console.log(labels)
 
-  return results
+  return labels
 }
 
 // When the button is clicked, inject scaping.js/setColor
@@ -38,7 +39,7 @@ changeColor.addEventListener("click", async () => {
       for (const frameResult of injectionResults){
         console.log(frameResult.result)
         doOCR(frameResult.result)
-          .then((ocr_texts) => findKeywords(ocr_texts))
+          .then((results) => findKeywords(results))
           .then((labels) => chrome.scripting.executeScript({
             target: { tabId: tab.id },
             func : setColorNew,
