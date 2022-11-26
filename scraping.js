@@ -45,6 +45,8 @@ function scrapUrl(blog_url) {
             glob_arr.push(config.detected)
         }
 
+        // TODO : 텍스트로 디텍션까지 해야함
+
         // if you need text of blog, may use this var
         //var elem = doc.getElementById("post-view"+strs[4])
         // var newText = elem.innerHTML.replace(/<[^>]*>?/g, '').replace(/\s/g, "")
