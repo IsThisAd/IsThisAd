@@ -1,8 +1,16 @@
 var flag = false;
 var glob_arr = [];
 //Getting the url of the blogs of naver, then scraps the body of the url and changes the block color of the web page
-function setColor() {
+async function setColor() {
     var urlRegex = /(https?:\/\/blog[^ "]*)/
+
+    console.log(document.querySelectorAll("li"))
+
+    await Promise.all(document.querySelectorAll("li").map((item) => (
+        checkItem(item)
+    )));
+
+    /*
     document.querySelectorAll("li").forEach(item => {
         var url = item.innerHTML.match(urlRegex)
         url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
@@ -10,8 +18,17 @@ function setColor() {
             setUrlColor(url, item,saveUrl);
         }
     })
+    */
     //console.log(glob_arr);
     return glob_arr;
+}
+
+async function checkItem(item) {
+    var url = item.innerHTML.match(urlRegex)
+    url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
+    if (url.length > 0 && !url.includes("MyBlog")) {
+        setUrlColor(url, item, saveUrl);
+    }
 }
 
 //chages the block color of the web page 
@@ -41,7 +58,7 @@ function setUrlColor(url, item,func) {
     var newURL = "https://blog.naver.com/PostView.nhn?blogId=" + strs[3] + "&logNo=" + strs[4]
     const request = new XMLHttpRequest()
     
-    request.open('GET', newURL, false)
+    request.open('GET', newURL, true)
     request.onload = function () {
         var parser = new DOMParser()
         var doc = parser.parseFromString(request.responseText, "text/html")
