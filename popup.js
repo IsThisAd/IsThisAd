@@ -18,9 +18,9 @@ function setColorNew(result) {
 
 function findKeywords(results) {
   console.log(results)
+  
   const labels = results.map((item) => (
-    console.log(item.data.text)
-    //item.data.text.includes("제공")
+    item.data.text.includes("제공")
   ));
 
   console.log(labels)
