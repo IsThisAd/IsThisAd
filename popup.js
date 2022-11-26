@@ -31,6 +31,7 @@ function findKeywords(results) {
 // When the button is clicked, inject scaping.js/setColor
 changeColor.addEventListener("click", async () => {
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    var result;
 
     await chrome.scripting.executeScript({
       target: { tabId: tab.id },
@@ -42,7 +43,7 @@ changeColor.addEventListener("click", async () => {
           .then((results) => findKeywords(results))
           .then((labels) => chrome.scripting.executeScript({
             target: { tabId: tab.id },
-            func : setColorNew,
+            func : applyResults,
             args : [labels],
         }))
       }

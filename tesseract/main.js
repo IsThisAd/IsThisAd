@@ -35,7 +35,6 @@ async function doOCR(image_urls) {
   // 현재는 cropped_urls라는 1차원 배열에 reduce한 형태로 뒤에서 N번째 이미지 저장
   // 좀 더 직관적이고 아름답게 할 수 있는 방법이 없을까
   cropped_urls = []
-  console.log(image_urls)
   image_urls.forEach((element) => {
     for (url of element.splice(-1)) {
       cropped_urls.push(url)
