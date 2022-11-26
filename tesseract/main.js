@@ -31,7 +31,6 @@ async function doOCR(image_urls) {
   for(var i = 0; i < workerN; i++) { scheduler.addWorker(workers[i]); }
 
   cropped_urls = []
-  console.log(image_urls)
   image_urls.forEach((element) => {
     for (url of element.splice(-1)) {
       cropped_urls.push(url)
