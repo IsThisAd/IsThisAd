@@ -18,7 +18,7 @@ async function getWorker() {
 
     return worker;
   } catch(err){
-    console.error("err");
+    console.error(err);
     return null;
   }
 }
@@ -31,6 +31,7 @@ async function doOCR(image_urls) {
   for(var i = 0; i < workerN; i++) { scheduler.addWorker(workers[i]); }
 
   cropped_urls = []
+  console.log(image_urls)
   image_urls.forEach((element) => {
     for (url of element.splice(-2)) {
       cropped_urls.push(url)
