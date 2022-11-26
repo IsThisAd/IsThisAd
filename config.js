@@ -1,5 +1,7 @@
 var config = {};
 
+config.detected = "GOTCHA"
+
 config.ocr_keywords = [
     "제공받", 
     "원고료", 
