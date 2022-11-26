@@ -30,6 +30,10 @@ async function doOCR(image_urls) {
   
   for(var i = 0; i < workerN; i++) { scheduler.addWorker(workers[i]); }
 
+  // TODO : image_urls는 2차원 배열로 각 블로그의 이미지 URL을 담고 있음
+  // 각 블로그 뒤에서 N번째 이미지까지만 OCR하려고 함
+  // 현재는 cropped_urls라는 1차원 배열에 reduce한 형태로 뒤에서 N번째 이미지 저장
+  // 좀 더 직관적이고 아름답게 할 수 있는 방법이 없을까
   cropped_urls = []
   image_urls.forEach((element) => {
     for (url of element.splice(-1)) {
