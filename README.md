@@ -1,5 +1,8 @@
 # IsThisAd
-Ad Detector as Chorme Extension
+- 광고성 네이버 블로그 포스팅을 감지하는 Chrome 확장 프로그램
 
-Test commit
-Test
+## 사용 방법
+1. Chrome 확장 프로그램을 설치합니다.
+1. 네이버 검색 후 프로그램 팝업 창의 버튼을 클릭합니다.
+1. 결과가 출력될 때까지 대기합니다.
+1. 광고성 포스팅이 표시됩니다.
