@@ -13,8 +13,10 @@ changeColor.addEventListener("click", async () => {
 
         console.log(frameResult.result)
         
-        detected_image_urls = frameResult.result.map(findAdImageURLs)
-        
+        // frameResult.result의 첫번째 원소는 블로그의 텍스트
+        // 이후 원소는 블로그 내의 이미지 URL
+        detected_image_urls = frameResult.result.map(findAdPosting)
+
         console.log(detected_image_urls)
         
         doOCR(detected_image_urls)
@@ -27,14 +29,29 @@ changeColor.addEventListener("click", async () => {
     });
   });
 
+function findAdPosting(items) {
+  const image_urls = items.slice(1)
+  
+  if (findAdKeywordInText(items[0])) { return config.detected }
+  if (findAdImageURLs(image_urls)) { return config.detected }
+
+  return image_urls
+}
+
+function findAdKeywordInText(text) {
+  for (keyword of config.text_keywords) {
+    if (text.includes(keyword)) { return true }
+  }
+  return false
+}
 
 function findAdImageURLs(url_arr) {
   for (url of url_arr) {
-      for (keyword of config.ad_urls) {
-          if (url.includes(keyword)) { return config.detected }
+      for (ad_url of config.ad_urls) {
+          if (url.includes(ad_url)) { return true }
       }
   }
-  return url_arr
+  return false
 }
 
 
