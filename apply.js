@@ -34,8 +34,8 @@ function setColorNew(labels) {
         var url = item.innerHTML.match(urlRegex)
         url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
         if (url.length > 0 && !url.includes("MyBlog")) {
-            if (!labels[index])
-                item.style.cssText = "background-color: #ccffcc";
+            if (!labels[index]);
+                //item.style.cssText = "background-color: #ccffcc";
             else
                 item.style.cssText = "background-color: #ffcccc"
             index++
