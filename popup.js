@@ -43,7 +43,7 @@ function findAdImageURLs(url_arr) {
 function isLoading(option){
   if(option){
     changeColor.innerHTML = "<i class=\"fa fa-spinner fa-spin\">";
-    document.getElementById("message").innerHTML = "작업 처리중입니다...<br> 10초에서 20초 정도 소요될 수 있습니다."
+    document.getElementById("message").innerHTML = "작업 처리중...<br> 소요시간 : 5초 ~ 10초<br> 팝업을 종료하지 마세요!"
   }
   else{
     document.getElementById("message").innerHTML = "작업 처리 완료"
