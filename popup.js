@@ -19,7 +19,7 @@ changeColor.addEventListener("click", async () => {
     });
   });
 
-// When the button is clicked, inject scaping.js/setColor
+// When the button is clicked, inject srcaping.js/setColor
 
 function isLoading(option){
   if(option){
