@@ -5,12 +5,18 @@
     <link rel="stylesheet" href="button.css">
     <script src="tesseract/tesseract.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+      .msg{
+        font-weight:bold;
+      }
+    </style>
   </head>
   <body>
-    <button id="changeColor" class="buttonload" display: block;  >
-      
+    <div class="msg"><p>아래 버튼을 누르면 광고 탐지를 시작합니다.</p></div>
+    <button id="changeColor" class="buttonload" display: block; >
+      <span style="text-align: center">start</span>
     </button>
-    <div id = "message"></div><div>
+    <div class="msg" id = "message"></div><div>
     <script src="config.js"></script>
     <script src="apply.js"></script>
     <script src="scraping.js"></script>

@@ -28,25 +28,27 @@ function findKeywords(text) {
 
 function setColorNew(labels) {
     var index = 0
+    const urlRegex = /(https?:\/\/blog[^ "]*)/
+    var doc = document.querySelectorAll(".bx._svp_item")
 
-    //var urlRegex = /(https?:\/\/blog[^ "]*)/
-    //document.querySelectorAll("li").forEach(item => {
-    document.querySelectorAll(".elss.etc_dsc").forEach(item => {
-        // var url = item.innerHTML.match(urlRegex)
-        // url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
-        // if (url.length > 0 && !url.includes("MyBlog")) {
-        const warningImg = document.createElement("span");
-        warningImg.innerText = " 🚨";
-        warningImg.setAttribute('class', 'sub_txt')
-        warningImg.style.cssText = "font-style:normal;font-weight:normal"
-        warningImg.style.cssFloat = "right;";
+    doc.forEach(item => {
+        var url = item.innerHTML.match(urlRegex)
+        url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
+        if (url.length > 0 && !url.includes("MyBlog")) {
+            var emojiLine = item.querySelector(".elss.etc_dsc")
 
-        //console.log(item)
-        if (!labels[index]){
-            item.appendChild(warningImg);
-            //item.style.cssText = "background-color: #ffcccc"
+            const warningImg = document.createElement("span");
+            warningImg.innerText = " 🚨";
+            warningImg.setAttribute('class', 'sub_txt')
+            warningImg.style.cssText = "font-style:normal;font-weight:normal"
+            warningImg.style.cssFloat = "right;";
+
+            //console.log(item)
+            if (labels[index]) {
+                emojiLine.appendChild(warningImg);
+                item.style.cssText = "background-color: #FFEFF1;border-radius: 10px"
+            }
+            index++
         }
-        index++
-        // }
     })
 }
