@@ -41,7 +41,7 @@ async function scrapData() {
         })
     };
 
-    document.querySelectorAll("li").forEach(item => {
+    document.querySelectorAll(".bx._svp_item").forEach(item => {
         var url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
         if (url.length > 0 && !url.includes("MyBlog")) {
             blog_items.push(url)
