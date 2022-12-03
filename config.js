@@ -1,9 +1,10 @@
 var config = {};
 
 config.detected = "GOTCHA"
+config.empty = "EMPTY_IMAGE"
 
 config.ocr_keywords = [
-    "제공받", 
+    "제공", 
     "원고료", 
     "소정", 
     "업체", 
@@ -18,9 +19,9 @@ config.text_keywords = [
     "소정의", 
     "업체로부터", 
     "협찬받",
-    "협찬 받아",
     "제품을",
-    "제작비"
+    "제작비",
+    "제공받"
 ];
 
 config.ad_urls = [
