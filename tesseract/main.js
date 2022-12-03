@@ -38,7 +38,7 @@ async function doOCR(image_urls) {
   image_urls.forEach((element) => {
     if (typeof(element) == typeof('string')) { cropped_urls.push(config.detected)}
     else if(element.length == 0) {cropped_urls.push(config.empty)}
-    else { for (url of element.splice(-1)) { cropped_urls.push(url) }}
+    else { for (url of element.slice(-1)) { cropped_urls.push(url) }}
   })
 
   const results = await Promise.all(cropped_urls.map((url) => {
