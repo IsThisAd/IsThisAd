@@ -5,7 +5,6 @@ async function applyResults(ocrResults) {
 
     const texts = ocrResults.map((item) => removeWhitespace(item.data.text));
     const labels = texts.map((item) => findKeywords(item))
-
     console.log(labels)
 
     chrome.scripting.executeScript({
@@ -29,16 +28,25 @@ function findKeywords(text) {
 
 function setColorNew(labels) {
     var index = 0
-    var urlRegex = /(https?:\/\/blog[^ "]*)/
-    document.querySelectorAll("li").forEach(item => {
-        var url = item.innerHTML.match(urlRegex)
-        url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
-        if (url.length > 0 && !url.includes("MyBlog")) {
-            if (!labels[index])
-                item.style.cssText = "background-color: #ffffff";
-            else
-                item.style.cssText = "background-color: #ffcccc"
-            index++
+
+    //var urlRegex = /(https?:\/\/blog[^ "]*)/
+    //document.querySelectorAll("li").forEach(item => {
+    document.querySelectorAll(".elss.etc_dsc").forEach(item => {
+        // var url = item.innerHTML.match(urlRegex)
+        // url = item.innerHTML.match(urlRegex) ? item.innerHTML.match(urlRegex)[1] : ''
+        // if (url.length > 0 && !url.includes("MyBlog")) {
+        const warningImg = document.createElement("span");
+        warningImg.innerText = " 🚨";
+        warningImg.setAttribute('class', 'sub_txt')
+        warningImg.style.cssText = "font-style:normal;font-weight:normal"
+        warningImg.style.cssFloat = "right;";
+
+        //console.log(item)
+        if (!labels[index]){
+            item.appendChild(warningImg);
+            //item.style.cssText = "background-color: #ffcccc"
         }
+        index++
+        // }
     })
 }
