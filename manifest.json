@@ -1,6 +1,6 @@
 {
-    "name": "isThisAd FE Prototype",
-    "description": "Build an Extension!",
+    "name": "isThisAd",
+    "description": "AD detector at Naver Blog",
     "version": "1.0",
     "manifest_version": 3,
     "host_permissions" : [
