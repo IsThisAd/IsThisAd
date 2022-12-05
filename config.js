@@ -21,7 +21,8 @@ config.text_keywords = [
     "협찬받",
     "제품을",
     "제작비",
-    "제공받"
+    "제공받",
+    "제품제공"
 ];
 
 config.ad_urls = [
